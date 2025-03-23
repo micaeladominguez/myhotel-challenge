@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  vehicle-service:
+    build: ./vehicle-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://vehicle-db:3306/vehicledb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - vehicle-db
+
+  vehicle-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vehicledb
+    ports:
+      - "3307:3306"
+    volumes:
+      - vehicle-db-data:/var/lib/mysql
+
+  employee-service:
+    build: ./employee-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://employee-db:3306/employeedb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - employee-db
+
+  employee-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employeedb
+    ports:
+      - "3308:3306"
+    volumes:
+      - employee-db-data:/var/lib/mysql
+      - ./employee-service/myhotel-test.sql:/docker-entrypoint-initdb.d/myhotel-test.sql
+
+
+volumes:
+  vehicle-db-data:
+  employee-db-data:
