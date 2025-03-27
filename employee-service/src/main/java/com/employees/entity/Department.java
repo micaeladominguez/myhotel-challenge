@@ -17,7 +17,6 @@ public class Department {
     @JoinColumn(name = "LOCATION_ID", referencedColumnName = "LOCATION_ID")
     private Location location;
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

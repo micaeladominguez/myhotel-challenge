@@ -14,7 +14,6 @@ public class Country {
     @Column(name = "COUNTRY_NAME", nullable = false)
     private String countryName;
 
-    // Getters y Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
